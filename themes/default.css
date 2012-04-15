@@ -1,0 +1,128 @@
+/* milliBlog "default" theme
+ * Copyright (c) 2011-2012 Troy Martin. All rights reserved.
+ *
+ * milliBlog is open source software. By downloading this software, you agree
+ * to abide by the terms and conditions set forth in this license.
+ *
+ * You may modify the source code and distribute instructions to modify it,
+ * but you may NOT distribute the source code or the software itself, modified
+ * or unmodified, without written permission from the author(s). In addition,
+ * you may not include or use milliBlog code, modified or unmodified, in your
+ * own project(s) without written permission from the author(s). 
+ *
+ * You may not modify or remove the displayed milliBlog copyright notices in
+ * the source code of the software, on a milliBlog itself, or anywhere else
+ * where a copyright notice has been placed.
+ *
+ * milliBlog comes with no warranty. You are responsible for any physical or
+ * electronic damages caused by using and/or modifying (including any form of
+ * database modifications) the software. The author(s) of the software cannot
+ * be held responsible for any damages caused by the end user of the software.
+ */
+
+html
+{
+	height: 100%;
+	font: 78%/130% "Verdana", "Arial", "Helvetica", sans-serif;
+	padding: 15px 0;
+	margin: 0;
+	margin-bottom: 1px;
+}
+
+body
+{
+	height: 100%;
+	background: url('backdrop.png') fixed;
+	font: 78%/130% "Verdana", "Arial", "Helvetica", sans-serif;
+	padding: 15px 0;
+	margin: 0;
+}
+
+a:link, a:visited
+{
+	text-decoration: none;
+	color: #3366ff;
+}
+
+a:hover
+{
+	text-decoration: underline;
+	color: #3366ff;
+}
+
+a:active
+{
+	text-decoration: underline;
+	color: #000099;
+}
+
+#content
+{
+	margin: 0 auto;
+	background-color: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	padding: 10px;
+	width: 780px;
+}
+
+span.title
+{
+	margin: 0;
+	background: url(header.jpg);
+	height: 150px;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.error
+{
+	width: 780px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	padding: 2px;
+	color: #ff0000;
+	font-weight: bold;
+	border: 1px dashed #ff6666;
+	background-color: #ffbbbb;
+}
+
+.post
+{
+	background-color: #d2d2d2;
+	padding: 5px;
+}
+
+h3.subtitle
+{
+	padding-left: 25px;
+}
+
+input[type="button"], input[type="submit"], input[type="file"], input[type="reset"]
+{
+	font-size: 10px;
+	color: #000000;
+	background-color: #DDDDDD;
+	border: solid #000000 1px;
+}
+
+input[type="text"], input[type="password"]
+{
+	font-size: 10px;
+	color: #000000;
+	background-color: #FFFFFF;
+	border: solid #000000 1px;
+}
+
+textarea#postbody
+{
+	border: 1px solid #bbbbbb;
+	font-family: "Verdana", "Geneva", sans-serif;
+	font-size: 12px;
+	width: 100%;	/* 774 px */
+	min-width: 100%; /* For Firefox 4+, which seems to allow textarea shrinkage */
+	max-width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #ffffff;
+}
