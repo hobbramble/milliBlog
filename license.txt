@@ -22,3 +22,7 @@ be held responsible for any damages caused by the end user of the software.
 milliBlog includes content from the Textile project (classTextile.php) and
 Remiz Rahnas' Internet Explorer border-radius compatibility rules
 (themes/border-radius.htc).
+
+milliBlog is developed primarily by Troy Martin, with contributions from
+other open source developers. For a complete list of contributors, see the
+included readme.txt.

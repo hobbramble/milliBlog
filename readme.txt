@@ -19,3 +19,7 @@ Starting with version 0.20120202, you can add more users to the software in
 blog_config.php through the arrays $blogpass, $bloguser, and $blogmail.
 
 We hope you enjoy your usage of milliBlog.
+
+CONTRIBUTORS:
+    Troy Martin - milliBlog core, primary developer
+    Patrick J. B. Simmons - pagination, permalinks for posts

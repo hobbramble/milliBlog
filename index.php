@@ -52,7 +52,7 @@ if (isset($_GET['logout']))
     session_start();
 }
 
-echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+echo "<!doctype html> <!-- HTML5 standards mode -->
      <html xmlns=\"http://www.w3.org/1999/xhtml\">
      <head>
      <meta content=\"text/html; charset=ISO-8859-1\" http-equiv=\"content-type\" />
@@ -90,13 +90,52 @@ else
 mysql_connect($blogdb_host, $blogdb_username, $blogdb_password) or die("Deathly Fatal Error! Cannot connect to the database.<p /><p /><h6 style=\"text-align: center;\">Powered by <a href=\"http://www.milliblog.org/\">milliBlog</a> <?php echo $milliblog_version; ?> (&copy; 2011-2012 Troy Martin).</h6>"); 
 mysql_select_db($blogdb_name)or die("Deathly Fatal Error! Cannot select the database.<p /><p /><h6 style=\"text-align: center;\">Powered by <a href=\"http://www.milliblog.org/\">milliBlog</a> <?php echo $milliblog_version; ?> (&copy; 2011-2012 Troy Martin).</h6>");
 
-$sql = "SELECT * FROM milliblog_posts ORDER BY id DESC"; // OFFSET $startint LIMIT 15";
+if (isset($_GET['pg']))
+{
+    $pg = (int) $_GET['pg'];
+}
+
+// Get number of rows in post table
+$sql = "SELECT  COUNT(*) FROM milliblog_posts";
 $result = mysql_query($sql);
+$r = mysql_fetch_row($result);
+$numrows = $r[0];
+$range = 3; // Number of pages linked to at a time.
+$totalpages = ceil($numrows / $bloggen_postspage);
+// Get the current page or display the front page
+if (isset($_GET['listpage']) && is_numeric($_GET['listpage']))
+{
+    $listpage = (int) $_GET['listpage'];
+} 
+else 
+{
+    $listpage = 1;
+}
+if ($listpage > $totalpages)
+{
+    $listpage = $totalpages;
+}
+if ($listpage < 1)
+{
+    $listpage = 1;
+}
+$offset = ($listpage - 1) * $bloggen_postspage;
+
+if ($pg)
+{
+    $sql = "SELECT * FROM milliblog_posts WHERE time=$pg LIMIT 1"; // OFFSET $startint LIMIT 15";
+    $result = mysql_query($sql);
+}
+else {
+    $sql = "SELECT * FROM milliblog_posts ORDER BY id DESC LIMIT $offset, $bloggen_postspage";
+    $result = mysql_query($sql);
+}
 
 while (($post = mysql_fetch_array($result)) != FALSE)
 {
     $posttime = date(DATE_RSS, $post['time']);
     $postbody = $post['post'];
+    $postpage = $post['time'];
     
     if ($use_textile)
     {
@@ -106,7 +145,7 @@ while (($post = mysql_fetch_array($result)) != FALSE)
     
     echo "<div class=\"post\"><div class=\"postbody\">$postbody</div>
           <p />
-          <div class=\"postoptions\"><sup>Posted $posttime by " . $blogreal[$post['name']];
+          <div class=\"postoptions\"><sup>Posted  <a href='{$_SERVER['PHP_SELF']}?pg=$postpage'>$posttime</a> by " . $blogreal[$post['name']];
     
     if (session_is_registered(myusername))
     {
@@ -114,6 +153,43 @@ while (($post = mysql_fetch_array($result)) != FALSE)
     }
     
     echo "</sup></div></div><hr />";
+}
+// Show links to the previous and first page.
+if ($listpage > 1)
+{
+    echo "<a href='{$_SERVER['PHP_SELF']}?listpage=1'>First</a> | ";
+    $prevpage = $listpage - 1;
+    echo "<a href='{$_SERVER['PHP_SELF']}?listpage=$prevpage'>Previous</a> | ";
+}
+else
+{
+    echo "First | Previous | "; // Show plain text instead of links in on the first page.
+}
+// Determine the current page number and the page numbers to show around it based on &range
+for ($x = ($listpage - $range); $x < (($listpage + $range) + 1); $x++)
+{
+    if (($x > 0) && ($x <= $totalpages))
+    {
+       if ($x == $listpage)
+       {
+          echo " <b>$x</b> ";
+       }
+       else
+       {
+          echo " <a href='{$_SERVER['PHP_SELF']}?listpage=$x'>$x</a> ";
+       }
+    }
+}
+// Show links to the next and last page.
+if ($listpage != $totalpages) 
+{
+    $nextpage = $listpage + 1;
+    echo " | <a href='{$_SERVER['PHP_SELF']}?listpage=$nextpage'>Next</a> | ";
+    echo "<a href='{$_SERVER['PHP_SELF']}?listpage=$totalpages'>Last</a>";
+}
+else 
+{
+    echo " | Next | Last"; // Show plain text instead of links in on the last page.
 }
 ?>
 <p />
