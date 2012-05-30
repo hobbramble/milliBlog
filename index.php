@@ -57,6 +57,7 @@ echo "<!doctype html> <!-- HTML5 standards mode -->
      <head>
      <meta content=\"text/html; charset=ISO-8859-1\" http-equiv=\"content-type\" />
      <link rel=\"stylesheet\" type=\"text/css\" href=\"themes/$bloggen_theme.css\" />
+     <link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" href=\"rssfeed.php\" />
      <title>$bloggen_title</title>
      </head>";
      
@@ -192,6 +193,7 @@ else
     echo " | Next | Last"; // Show plain text instead of links in on the last page.
 }
 ?>
+&nbsp;&nbsp;<a href="rssfeed.php"><img src="rssicon.png" alt="RSS"></a>
 <p />
 <p />
 <h6 style="text-align: center;">Powered by <a href="http://www.milliblog.org/">milliBlog</a> <?php echo $milliblog_version; ?> (&copy; 2011-2012 Troy Martin).</h6> 
